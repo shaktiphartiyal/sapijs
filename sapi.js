@@ -1,4 +1,5 @@
 (function () {
+    
     class APIResponse
     {
         constructor()
