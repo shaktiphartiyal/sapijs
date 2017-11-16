@@ -95,6 +95,18 @@
                                                 SAPIJS is a simple and fast API consumer for the web, it uses the latest technology and is cross browser compatible.
                                             </p>
                                         </div>
+
+
+
+                                        <div class="intro1" id="r-holder">
+                                            <ul>
+                                                <li><strong>Latest Version : </strong><span id="r-latest-version"><i class="fa fa-spin fa-spinner"></i></span></li>
+                                                <li><strong>Download ZIP : </strong><span id="r-latest-zip"><i class="fa fa-spin fa-spinner"></i></span></li>
+                                                <li><strong>Download Tar  : </strong><span id="r-latest-tar"><i class="fa fa-spin fa-spinner"></i></span></li>
+                                            </ul>
+                                        </div>
+
+
                                     </div>
 
                                 </div>
@@ -316,8 +328,13 @@
             </div>
             <!-- // end .row -->
             <hr style="height: 2px; border-color: #ff0600;"/>
-            <div class="col-md-12">
-                I you want more features please log them in here ->
+            <div class="col-md-12 text-center">
+                <p>
+                    I you want more features please or found a bug, log them in here -> <a href="https://github.com/shaktiphartiyal/sapijs/issues" target="_blank">https://github.com/shaktiphartiyal/sapijs/issues</a>
+                </p>
+                <p>
+                    If you would like to support the development of more awesome stuff, please donate.
+                </p>
             </div>
             <hr/>
         </div>
@@ -365,6 +382,34 @@
             $(btn).attr('disabled', false);
         });
     }
+
+
+
+    (function(){
+        sapi.get('https://api.github.com/repos/shaktiphartiyal/sapijs/tags').then(response => {
+            let data = response.data;
+            try
+            {
+                data = JSON.parse(data);
+                data = data[0];
+                let tag = document.getElementById('r-latest-version');
+                let zip = document.getElementById('r-latest-zip');
+                let tar = document.getElementById('r-latest-tar');
+                tag.innerHTML = '<b>'+data.name+'</b>';
+                zip.innerHTML = '<b><a href="'+data.zipball_url+'" target="_blank">'+data.zipball_url+'</a></b>';
+                tar.innerHTML = '<b><a href="'+data.tarball_url+'" target="_blank">'+data.tarball_url+'</a></b>';
+            }
+            catch(e)
+            {
+                let holder = document.getElementById('r-holder');
+                holder.parentNode.removeChild(holder);
+            }
+        },
+        error => {
+            let holder = document.getElementById('r-holder');
+            holder.parentNode.removeChild(holder);
+        });
+    })();
 </script>
 
 </html>
